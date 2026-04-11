@@ -14,7 +14,21 @@
       {
         "title": "micfloat",
         "width": 800,
-        "height": 600
+        "height": 600,
+        "visible": false
+      },
+      {
+        "label": "overlay",
+        "title": "Overlay",
+        "width": 500,
+        "height": 400,
+        "transparent": true,
+        "decorations": false,
+        "alwaysOnTop": true,
+        "visible": false,
+        "center": true,
+        "url": "overlay.html",
+        "additionalBrowserArgs": "--use-fake-ui-for-media-stream --autoplay-policy=no-user-gesture-required"
       }
     ],
     "security": {
