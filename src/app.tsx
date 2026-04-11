@@ -1,41 +1,32 @@
-import { useState } from "react"
-import { invoke } from "@tauri-apps/api/core"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import { Launch } from "@/components/launch"
+import { Setup } from "@/components/setup"
+import { Settings } from "@/components/settings"
 
 export function App() {
-  const [isOpen, setIsOpen] = useState(false)
-
-  const openOverlay = async () => {
-    await invoke("toggle_overlay", { visible: true })
-    setIsOpen(true)
-  }
-
-  const closeOverlay = async () => {
-    await invoke("toggle_overlay", { visible: false })
-    setIsOpen(false)
-  }
-
   return (
-    <div className="flex flex-wrap px-4 items-center justify-center h-screen gap-4">
-      <textarea
-        placeholder="Click here first to focus, then open overlay"
-        className="w-full block border border-border px-4 py-2 rounded"
-        rows={10}
-      />
-      <button
-        onClick={openOverlay}
-        disabled={isOpen}
-        className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 disabled:opacity-50 transition"
-      >
-        Open Overlay
-      </button>
+    <div className="min-h-screen p-6">
+      <div className="mx-auto max-w-[600px] space-y-6">
+        <h1 className="text-xl font-semibold text-foreground">MicFloat</h1>
 
-      <button
-        onClick={closeOverlay}
-        disabled={!isOpen}
-        className="px-4 py-2 bg-destructive text-destructive-foreground rounded-lg hover:bg-destructive/90 disabled:opacity-50 transition"
-      >
-        Close Overlay
-      </button>
+        <Tabs defaultValue="launch">
+          <TabsList>
+            <TabsTrigger value="launch">Launch</TabsTrigger>
+            <TabsTrigger value="setup">Setup</TabsTrigger>
+            <TabsTrigger value="settings">Settings</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="launch">
+            <Launch />
+          </TabsContent>
+          <TabsContent value="setup">
+            <Setup />
+          </TabsContent>
+          <TabsContent value="settings">
+            <Settings />
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   )
 }

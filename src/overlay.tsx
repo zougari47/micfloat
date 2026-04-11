@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { invoke } from "@tauri-apps/api/core"
+import { load } from "@tauri-apps/plugin-store"
 import { useMic } from "@/hooks/mic"
 import { transcribeAudio } from "@/lib/speechmatics"
 import { writeText } from "@tauri-apps/plugin-clipboard-manager"
@@ -18,12 +19,17 @@ export function OverlayApp() {
     if (status !== "listening") return
     try {
       setStatus("processing")
+      const store = await load("settings.json")
+      const apiKey = await store.get<string>("api_key")
+      if (!apiKey) {
+        throw new Error("No API key found. Please set it in Settings.")
+      }
       const blob = await getAudioBlob()
       const file = new File([blob], "recording.wav")
-      const text = await transcribeAudio(file)
+      const text = await transcribeAudio(file, apiKey)
       await writeText(text)
       setStatus("success")
-      setTimeout(() => closeOverlay(), 1500)
+      setTimeout(() => closeOverlay(), 500)
     } catch (e) {
       setErrorMessage(e instanceof Error ? e.message : "Transcription failed.")
       setStatus("error")
