@@ -9,6 +9,7 @@ fn toggle_overlay(app: tauri::AppHandle, visible: bool) {
         if visible {
             window.show().unwrap();
             window.set_focus().unwrap();
+            window.emit("overlay-opened", ()).unwrap();
         } else if std::env::args().any(|a| a == "--overlay") {
             app.exit(0);
         } else {

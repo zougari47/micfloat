@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { invoke } from "@tauri-apps/api/core"
+import { listen } from "@tauri-apps/api/event"
 import { load } from "@tauri-apps/plugin-store"
 import { useMic } from "@/hooks/mic"
 import { transcribeAudio } from "@/lib/speechmatics"
@@ -9,7 +10,7 @@ type Status = "listening" | "processing" | "success" | "error"
 
 export function OverlayApp() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const { getAudioBlob, stop } = useMic(canvasRef)
+  const { getAudioBlob, start, stop } = useMic(canvasRef)
   const [status, setStatus] = useState<Status>("listening")
   const [errorMessage, setErrorMessage] = useState("")
 
@@ -19,6 +20,17 @@ export function OverlayApp() {
     stop()
     invoke("toggle_overlay", { visible: false })
   }
+
+  useEffect(() => {
+    const unlisten = listen("overlay-opened", () => {
+      setStatus("listening")
+      setErrorMessage("")
+      start()
+    })
+    return () => {
+      unlisten.then((fn) => fn())
+    }
+  }, [start])
 
   const handleSubmit = async () => {
     if (status !== "listening") return
@@ -71,6 +83,8 @@ export function OverlayApp() {
               onClick={() => {
                 setStatus("listening")
                 setErrorMessage("")
+                stop()
+                start()
               }}
               className="mt-4 bg-muted px-3 py-1.5 rounded hover:bg-accent transition text-xs"
             >
