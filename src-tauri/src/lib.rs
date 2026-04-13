@@ -1,5 +1,6 @@
 use tauri::Manager;
 
+use tauri::Emitter;
 #[cfg(target_os = "linux")]
 use webkit2gtk::{PermissionRequestExt, WebViewExt};
 
