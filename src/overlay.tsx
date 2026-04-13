@@ -9,11 +9,16 @@ type Status = "listening" | "processing" | "success" | "error"
 
 export function OverlayApp() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const { getAudioBlob } = useMic(canvasRef)
+  const { getAudioBlob, stop } = useMic(canvasRef)
   const [status, setStatus] = useState<Status>("listening")
   const [errorMessage, setErrorMessage] = useState("")
 
-  const closeOverlay = () => invoke("toggle_overlay", { visible: false })
+  const closeOverlay = () => {
+    setStatus("listening")
+    setErrorMessage("")
+    stop()
+    invoke("toggle_overlay", { visible: false })
+  }
 
   const handleSubmit = async () => {
     if (status !== "listening") return
