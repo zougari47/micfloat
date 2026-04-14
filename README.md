@@ -16,7 +16,7 @@ You don't need to be a developer to use MicFloat. Just download, set your API ke
 
 Currently, MicFloat is compiled and automatically released for **Linux**.
 
-- Head over to the [Releases page](/releases).
+- Head over to the [Releases page](../../releases).
 - Download either the `.deb` file (for Debian/Ubuntu-based systems) or the `.AppImage` (works on almost all Linux distributions).
 - Install or run the downloaded file.
 
