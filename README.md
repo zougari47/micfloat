@@ -16,15 +16,34 @@ You don't need to be a developer to use MicFloat. Just download, set your API ke
 
 Currently, MicFloat is compiled and automatically released for **Linux**.
 
-- Head over to the [Releases page](../../releases/latest).
+- Head over to the [Releases page](/releases).
 - Download either the `.deb` file (for Debian/Ubuntu-based systems) or the `.AppImage` (works on almost all Linux distributions).
 - Install or run the downloaded file.
+
+#### DEB (Ubuntu, Debian)
+
+```bash
+sudo apt install ./micfloat_0.1.0_amd64.deb
+```
+
+#### RPM (Fedora, RHEL, openSUSE)
+
+```bash
+sudo dnf install ./micfloat-0.1.0-1.x86_64.rpm
+```
+
+#### AppImage (any Linux)
+
+```bash
+chmod +x micfloat_0.1.0_amd64.AppImage
+./micfloat_0.1.0_amd64.AppImage
+```
 
 ### 2. Setup your API Key
 
 Because MicFloat is a bring-your-own-key application, you need to provide an API key from Speechmatics.
 
-1. Create a free account at [Speechmatics](https://portal.speechmatics.com/).
+1. Create a free account at [Speechmatics](https://portal.speechmatics.com/)(8 hours/month).
 2. Generate an API Key in your dashboard.
 3. Open the **MicFloat main application window**.
 4. Paste your API key into the Settings page and save it.
@@ -78,8 +97,3 @@ Want to contribute, tinker, or build for another OS (like Windows or macOS)?
    ```bash
    bun run tauri build
    ```
-
-## 🤝 Contributing
-
-Contributions are absolutely welcome! Whether it's adding support for new transcription APIs (like OpenAI Whisper), improving the UI, or porting to Windows/macOS, feel free to open an issue or submit a Pull Request.
-
